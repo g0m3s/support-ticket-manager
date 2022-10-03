@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { Alert } from 'react-native'
 import { Input, Button } from '../components'
 import Logo from '../assets/logo_primary.svg'
+import auth from '@react-native-firebase/auth'
 import { Envelope, Key } from 'phosphor-react-native'
 import { Heading, VStack, Icon, useTheme, Text } from 'native-base'
 
@@ -8,9 +10,21 @@ export const SignIn = () => {
   const { colors } = useTheme()
   const [mail, setMail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSignIn = () => {
 
+    if (!mail || !password) {
+      return Alert.alert('Entrar', 'Informe e-mail e senha')
+    }
+    setIsLoading(true)
+
+    auth()
+      .signInWithEmailAndPassword(mail, password)
+      .catch(error => {
+        setIsLoading(false)
+        return Alert.alert('Erro', error.code.split('/')[1].replace('-', ' '))
+      })
   }
 
   return (
@@ -31,7 +45,12 @@ export const SignIn = () => {
         onChangeText={setPassword}
         InputLeftElement={<Icon ml={4} as={<Key color={colors.gray[300]} />} />}
       />
-      <Button onPress={handleSignIn} title='Entrar' w='full' />
+      <Button
+        w='full'
+        title='Entrar'
+        isLoading={isLoading}
+        onPress={handleSignIn}
+      />
     </VStack>
   )
 }

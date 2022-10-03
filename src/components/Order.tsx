@@ -4,7 +4,7 @@ import { Box, Circle, HStack, Text, useTheme, VStack, Pressable, IPressableProps
 
 export interface OrderProps {
   id: string
-  when: Date
+  when: string
   patrimony: number
   status: 'open' | 'closed'
 }
@@ -36,7 +36,7 @@ export const Order: React.FC<{ data: OrderProps } & IPressableProps> = ({ data, 
           <HStack alignItems='center'>
             <ClockAfternoon size={15} color={colors.gray[300]} />
             <Text color='gray.200' fontSize='xs' ml={1}>
-              {data.when.toDateString()}
+              {data.when}
             </Text>
           </HStack>
         </VStack>

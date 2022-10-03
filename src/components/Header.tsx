@@ -14,10 +14,10 @@ export const Header: React.FC<HeaderProps> = ({ pageName, ...rest }) => {
 
   return (
     <HStack
-      pb={6}
       pt={12}
       w='full'
       bg='gray.600'
+      alignItems='center'
       justifyContent='space-between'
       {...rest}
     >
